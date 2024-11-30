@@ -18,7 +18,7 @@ const Catalog = ({ apiUrl = API_URL }: CatalogPropsT) => {
   const history = useLocation();
 
   useEffect(() => {
-    if(history.pathname === '/') {
+    if (history.pathname === "/") {
       navigate(`/catalog?page=1`);
     }
   }, []);
@@ -52,22 +52,29 @@ const Catalog = ({ apiUrl = API_URL }: CatalogPropsT) => {
     navigate(`/catalog?page=${newPage}`);
   };
 
-  return loading ? (
-    <div>Loading...</div>
-  ) : (
+  return (
     <div>
       <h1>Catalog</h1>
-      <div>
-        {data?.products.map((item) => (
-          <div key={item.id}>{item.title}</div>
-        ))}
-      </div>
-      <div>
-        <button onClick={() => handlePageChange(page - 1)} disabled={page <= 1}>
-          Previous
-        </button>
-        <button onClick={() => handlePageChange(page + 1)}>Next</button>
-      </div>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <div>
+            {data?.products.map((item) => (
+              <div key={item.id}>{item.title}</div>
+            ))}
+          </div>
+          <div>
+            <button
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page <= 1}
+            >
+              Previous
+            </button>
+            <button onClick={() => handlePageChange(page + 1)}>Next</button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
