@@ -11,7 +11,7 @@ const API_URL = "https://dummyjson.com/products";
 const Catalog = ({ apiUrl = API_URL }: CatalogPropsT) => {
   const [searchParams] = useSearchParams();
   const [itemsPerPage] = useState(10);
-  const [data, setData] = useState<ResponseT>();
+  const [data, setData] = useState<ResponseT>({ products: [], total: 0, skip: 0, limit: 0 });
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -52,6 +52,10 @@ const Catalog = ({ apiUrl = API_URL }: CatalogPropsT) => {
     navigate(`/catalog?page=${newPage}`);
   };
 
+  const isLastPage = useMemo(() => {
+    return page * itemsPerPage >= data?.total;
+  }, [data?.total, itemsPerPage, page]);
+
   return (
     <div>
       <h1>Catalog</h1>
@@ -71,7 +75,12 @@ const Catalog = ({ apiUrl = API_URL }: CatalogPropsT) => {
             >
               Previous
             </button>
-            <button onClick={() => handlePageChange(page + 1)}>Next</button>
+            <button
+              onClick={() => handlePageChange(page + 1)}
+              disabled={isLastPage}
+            >
+              Next
+            </button>
           </div>
         </>
       )}

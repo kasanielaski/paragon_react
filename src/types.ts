@@ -1,9 +1,11 @@
+export type ProductT = {
+  id: string;
+  title: string;
+  price: number;
+};
+
 export type ResponseT = {
-  products: {
-    id: string;
-    title: string;
-    price: number;
-  }[];
+  products: ProductT[];
   total: number;
   skip: number;
   limit: number;
