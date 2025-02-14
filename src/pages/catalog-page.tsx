@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 
+import { CatalogItem, CatalogList } from './styled';
 import { ResponseT } from '../types';
 import { API_URL } from '../constants';
 
@@ -66,13 +67,13 @@ export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
         <div>Loading...</div>
       ) : (
         <>
-          <div>
+          <CatalogList>
             {data?.products.map((item) => (
-              <div key={item.id} onClick={() => handleDetails(item.id)}>
+              <CatalogItem key={item.id} onClick={() => handleDetails(item.id)}>
                 {item.title}
-              </div>
+              </CatalogItem>
             ))}
-          </div>
+          </CatalogList>
           <div>
             <button onClick={() => handlePageChange(page - 1)} disabled={page <= 1}>
               Previous
