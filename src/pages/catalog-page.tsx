@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 
-import { CatalogItem, CatalogList } from './styled';
+import { ButtonWrapper, CatalogItem, CatalogList, Wrapper } from './styled';
 import { ResponseT } from '../types';
 import { API_URL } from '../constants';
 
@@ -61,7 +61,7 @@ export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
   }, [data, itemsPerPage, page]);
 
   return (
-    <div>
+    <Wrapper>
       <h1>Catalog</h1>
       {loading ? (
         <div>Loading...</div>
@@ -74,16 +74,16 @@ export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
               </CatalogItem>
             ))}
           </CatalogList>
-          <div>
+          <ButtonWrapper>
             <button onClick={() => handlePageChange(page - 1)} disabled={page <= 1}>
               Previous
             </button>
             <button onClick={() => handlePageChange(page + 1)} disabled={isLastPage}>
               Next
             </button>
-          </div>
+          </ButtonWrapper>
         </>
       )}
-    </div>
+    </Wrapper>
   );
 };
