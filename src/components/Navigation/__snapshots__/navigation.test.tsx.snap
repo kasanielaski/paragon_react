@@ -1,28 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MyComponent > should match snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="sc-gNZgCX la-DHjz"
-  >
-    <button
-      disabled=""
-    >
-      Previous
-    </button>
-    <button
-      disabled=""
-    >
-      Next
-    </button>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`Navigation component > should match snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="sc-gNZgCX la-DHjz"
+    class="sc-jbAkgO gpPZIG"
   >
     <button
       disabled=""

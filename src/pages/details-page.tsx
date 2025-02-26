@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
-import { ButtonWrapper, DetailImage, DetailWrapper, Wrapper } from './styled';
+import { Wrapper } from './styled';
 import { ProductT } from '../types';
 import { API_URL } from '../constants';
+import { DetailsView } from '../components';
 
 interface IDetailsPageProps {
   apiUrl?: string;
@@ -57,17 +58,7 @@ export const DetailsPage = ({ apiUrl = API_URL }: IDetailsPageProps) => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <DetailWrapper>
-          <DetailImage>
-            <img src={data?.images[0]} alt={data?.title} />
-          </DetailImage>
-          <span>{data?.title}</span>
-          <span style={{ textAlign: 'center' }}>{data?.description}</span>
-          <span>Price: {formattedPrice}</span>
-          <ButtonWrapper>
-            <button onClick={handleGoBack}>Go back</button>
-          </ButtonWrapper>
-        </DetailWrapper>
+        <DetailsView data={data} formattedPrice={formattedPrice} handleGoBack={handleGoBack} />
       )}
     </Wrapper>
   );
