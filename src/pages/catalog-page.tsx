@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 
-import { ButtonWrapper, CatalogItem, CatalogList, Wrapper } from './styled';
+import { CatalogItem, CatalogList, Wrapper } from './styled';
 import { ResponseT } from '../types';
 import { API_URL } from '../constants';
+import { Navigation } from '../components';
 
 interface ICatalogPageProps {
   apiUrl?: string;
@@ -74,14 +75,11 @@ export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
               </CatalogItem>
             ))}
           </CatalogList>
-          <ButtonWrapper>
-            <button onClick={() => handlePageChange(page - 1)} disabled={page <= 1}>
-              Previous
-            </button>
-            <button onClick={() => handlePageChange(page + 1)} disabled={isLastPage}>
-              Next
-            </button>
-          </ButtonWrapper>
+          <Navigation
+            handlePageChange={handlePageChange}
+            page={page}
+            isLastPage={isLastPage}
+          />
         </>
       )}
     </Wrapper>
