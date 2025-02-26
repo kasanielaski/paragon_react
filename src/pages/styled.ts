@@ -6,9 +6,7 @@ export const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const CatalogWrapper = styled.div``;
-
-export const CatalogList = styled.ul`
+export const CatalogWrapper = styled.ul`
   padding: 0;
   margin: 0;
   list-style: none;

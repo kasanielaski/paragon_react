@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CatalogList component > should match snapshot 1`] = `
+<DocumentFragment>
+  <ul
+    class="sc-gjcoXW chsMsb"
+  />
+</DocumentFragment>
+`;

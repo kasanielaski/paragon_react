@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 
-import { ButtonWrapper, CatalogItem, CatalogList, Wrapper } from './styled';
+import { Wrapper } from './styled';
 import { ResponseT } from '../types';
 import { API_URL } from '../constants';
+import { CatalogList, Navigation } from '../components';
 
 interface ICatalogPageProps {
   apiUrl?: string;
@@ -67,21 +68,12 @@ export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
         <div>Loading...</div>
       ) : (
         <>
-          <CatalogList>
-            {data?.products.map((item) => (
-              <CatalogItem key={item.id} onClick={() => handleDetails(item.id)}>
-                {item.title}
-              </CatalogItem>
-            ))}
-          </CatalogList>
-          <ButtonWrapper>
-            <button onClick={() => handlePageChange(page - 1)} disabled={page <= 1}>
-              Previous
-            </button>
-            <button onClick={() => handlePageChange(page + 1)} disabled={isLastPage}>
-              Next
-            </button>
-          </ButtonWrapper>
+          <CatalogList data={data} handleDetails={handleDetails} />
+          <Navigation
+            handlePageChange={handlePageChange}
+            page={page}
+            isLastPage={isLastPage}
+          />
         </>
       )}
     </Wrapper>
