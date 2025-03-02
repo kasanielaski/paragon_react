@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 import { Wrapper } from './styled';
 import { ResponseT } from '../types';
@@ -13,8 +14,6 @@ interface ICatalogPageProps {
 export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
   const [searchParams] = useSearchParams();
   const [itemsPerPage] = useState(10);
-  const [data, setData] = useState<ResponseT>();
-  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const history = useLocation();
@@ -29,25 +28,13 @@ export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
     return parseInt(searchParams.get('page') || '1');
   }, [searchParams]);
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
+  const { data, isLoading} = useQuery<ResponseT>(['catalog', page, itemsPerPage], async () => {
     const offset = (page - 1) * itemsPerPage;
-    try {
-      const response = await fetch(`${apiUrl}?skip=${offset}&limit=${itemsPerPage}`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      setData(data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [apiUrl, itemsPerPage, page]);
-
-  useEffect(() => {
-    fetchData();
-  }, [searchParams, fetchData]);
+    const response = await fetch(`${apiUrl}?skip=${offset}&limit=${itemsPerPage}`, {
+      method: 'GET'
+    });
+    return response.json();
+  });
 
   const handlePageChange = (newPage: number) => {
     navigate(`/catalog?page=${newPage}`);
@@ -64,7 +51,7 @@ export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
   return (
     <Wrapper>
       <h1>Catalog</h1>
-      {loading ? (
+      {isLoading ? (
         <div>Loading...</div>
       ) : (
         <>
