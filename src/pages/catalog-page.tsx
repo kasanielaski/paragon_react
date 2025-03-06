@@ -28,13 +28,17 @@ export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
     return parseInt(searchParams.get('page') || '1');
   }, [searchParams]);
 
-  const { data, isLoading} = useQuery<ResponseT>(['catalog', page, itemsPerPage], async () => {
-    const offset = (page - 1) * itemsPerPage;
-    const response = await fetch(`${apiUrl}?skip=${offset}&limit=${itemsPerPage}`, {
-      method: 'GET'
-    });
-    return response.json();
-  });
+  const { data, isLoading } = useQuery<ResponseT>(
+    ['catalog', page, itemsPerPage],
+    async () => {
+      const offset = (page - 1) * itemsPerPage;
+      const response = await fetch(`${apiUrl}?skip=${offset}&limit=${itemsPerPage}`, {
+        method: 'GET'
+      });
+      return response.json();
+    },
+    { keepPreviousData: true }
+  );
 
   const handlePageChange = (newPage: number) => {
     navigate(`/catalog?page=${newPage}`);
@@ -56,11 +60,7 @@ export const CatalogPage = ({ apiUrl = API_URL }: ICatalogPageProps) => {
       ) : (
         <>
           <CatalogList data={data} handleDetails={handleDetails} />
-          <Navigation
-            handlePageChange={handlePageChange}
-            page={page}
-            isLastPage={isLastPage}
-          />
+          <Navigation handlePageChange={handlePageChange} page={page} isLastPage={isLastPage} />
         </>
       )}
     </Wrapper>

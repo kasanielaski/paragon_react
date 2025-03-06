@@ -19,12 +19,18 @@ export const DetailsPage = ({ apiUrl = API_URL }: IDetailsPageProps) => {
     return parseInt(searchParams.get('id') || '1');
   }, [searchParams]);
 
-  const { data, isLoading } = useQuery<ProductT>(['product', id], async () => {
-    const response = await fetch(`${apiUrl}/${id}`, {
-      method: 'GET'
-    });
-    return response.json();
-  });
+  const { data, isLoading } = useQuery<ProductT>(
+    ['product', id],
+    async () => {
+      const response = await fetch(`${apiUrl}/${id}`, {
+        method: 'GET'
+      });
+      return response.json();
+    },
+    {
+      keepPreviousData: true
+    }
+  );
 
   const formattedPrice = useMemo(() => {
     return Intl.NumberFormat('en-US', {
